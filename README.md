@@ -1,2 +1,2 @@
 # cc-assignment
-Assignment
+Assignment - [Rewards](./rewards)
