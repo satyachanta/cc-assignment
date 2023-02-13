@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Employee</title>
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous">
+    <!-- JQury from Google CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+		 function getContent(elem) {
+			console.log(elem);
+			$.get('/v1/rest/rewards/order/'+ elem.getAttribute('data-id'))
+			.done(function(data) { 
+		        $(elem).parent().text(data);
+		    });
+	    }
+
+        </script>
+</head>
+<body>
+<div class="container my-2" align="center">
+<a th:href="@{/}" class="btn btn-primary btn-sm mb-3" >Back</a>
+<table style="width:80%" border="1"
+           class = "table table-striped table-responsive-md">
+    <thead>
+  <tr>
+    <th>Order Id</th>
+    <th>Created Date</th>
+    <th>Customer Name</th>
+    <th>OrderItems</th>
+    <th>OrderTotal</th>
+    <th>Reward Points</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="order:${allOrders}">
+        <td th:text="${order.id}"></td>
+        <td th:text="${order.createdDate}"></td>
+        <td th:text="${order.customer.name}"></td>
+        <td th:text="${order.items.size()}"> </td>
+        <td th:text="${#numbers.formatCurrency(order.total)}"></td>
+        <td><a href="#" th:data-id="${order.id}" th:onclick="javascript:getContent(this)" class="btn btn-primary btn-sm mb-3" >Show Reward Points</a></td>
+
+  </tr>
+  </tbody>
+</table>
